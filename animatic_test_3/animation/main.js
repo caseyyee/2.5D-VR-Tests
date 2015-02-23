@@ -164,11 +164,12 @@ function animate() {
 	controls.update();
 
 	// Render the scene through the VREffect, but only if it's in VR mode.
-	if(vrmgr.isVRMode()) {
-		effect.render(scene, camera);
-	} else {
-		renderer.render(scene, camera);
-	}
+	// if(vrmgr.isVRMode()) {
+	// 	effect.render(scene, camera);
+	// } else {
+	// 	renderer.render(scene, camera);
+	// }
+	effect.render(scene, camera);
 
 	// End
 	stats.end();
