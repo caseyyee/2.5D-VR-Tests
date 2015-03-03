@@ -10,7 +10,11 @@ renderer.sortObjects = false;
 document.body.appendChild(renderer.domElement);
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-camera.position.y = 75;
+var dolly = new THREE.Group();
+dolly.position.set(0,75,0);
+dolly.add(camera);
+scene.add(dolly);
+
 var controls = new THREE.VRControls(camera);
 var effect = new THREE.VREffect(renderer);
 effect.setSize(window.innerWidth, window.innerHeight);
@@ -56,7 +60,7 @@ function handleComplete() {
 	window.musicInstance.addEventListener("complete", function(){
 		window.ANIMATION_OVER = true;
 	});
-	
+
 	setTimeout(function(){
 		window.musicInstance.play();
 		animate();
@@ -65,11 +69,14 @@ function handleComplete() {
 }
 
 function sortSprites(sprites){
+	sprites = sprites.filter(function(s) {
+		s.type == 'mesh'
+	})
+
 
 	// Manual sorting of sprites, in ascending order
 	// Remember, if a<b return negative. if a>b return postive.
 	sprites.sort(function(a,b){
-
 		// Get the sprite from mesh
 		a = a.canvasSprite;
 		b = b.canvasSprite;
